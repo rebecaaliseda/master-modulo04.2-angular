@@ -1,0 +1,11 @@
+<app-public-header *ngIf="!auth.isLogged()"></app-public-header>
+<app-private-header *ngIf="auth.isLogged()"></app-private-header>
+
+<app-public-menu *ngIf="!auth.isLogged()"></app-public-menu>
+<app-private-menu *ngIf="auth.isLogged()"></app-private-menu>
+
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>

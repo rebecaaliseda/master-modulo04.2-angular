@@ -1,0 +1,49 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>Login</h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label>Username</label>
+
+        <input type="email" formControlName="username" />
+
+        @if (
+          loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')
+        ) {
+          <p class="error">El username es obligatorio</p>
+        }
+
+        @if (loginForm.get('username')?.touched && loginForm.get('username')?.hasError('email')) {
+          <p class="error">Debe ser un email válido</p>
+        }
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+
+        <input type="password" formControlName="password" />
+
+        @if (
+          loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')
+        ) {
+          <p class="error">La contraseña es obligatoria</p>
+        }
+
+        @if (
+          loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')
+        ) {
+          <p class="error">Debe tener al menos 8 caracteres</p>
+        }
+      </div>
+
+      <button type="submit">Login</button>
+
+      @if (loading) {
+        <div class="loading">
+          <img src="assets/loading.gif" alt="Loading" />
+        </div>
+      }
+    </form>
+  </div>
+</div>

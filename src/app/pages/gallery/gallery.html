@@ -1,0 +1,62 @@
+<section class="gallery-page">
+  <h1>Gallery</h1>
+
+  <!-- Imagen seleccionada -->
+  <div class="selected-image">
+    <img
+      [rotate]="0"
+      [step]="15"
+      [src]="selectedImage.src"
+      [alt]="selectedImage.title"
+      [style.width.px]="imageSize"
+    />
+
+    <p>{{ selectedImage.title }}</p>
+  </div>
+
+  <!-- Botonera -->
+
+  <div class="controls">
+    <button (click)="previous()" [disabled]="selectedIndex === 0">Anterior</button>
+
+    <button (click)="next()" [disabled]="selectedIndex === images.length - 1">Siguiente</button>
+
+    <button (click)="increaseSize()">Aumentar</button>
+
+    <button (click)="decreaseSize()">Disminuir</button>
+
+    @if (!playing) {
+      <button (click)="play()">Play</button>
+    }
+
+    @if (playing) {
+      <button (click)="stop()">Stop</button>
+    }
+  </div>
+
+  <!-- Miniaturas -->
+
+  <div class="thumbnail-list">
+    @for (
+      image of images | slice: pageStart : pageStart + pageSize;
+      track image.id;
+      let i = $index
+    ) {
+      <img
+        class="thumbnail"
+        [class.active]="image.id === selectedImage.id"
+        [src]="image.src"
+        [alt]="image.title"
+        (click)="selectImage(pageStart + i)"
+      />
+    }
+  </div>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="pageStart === 0">← Página anterior</button>
+
+    <button (click)="nextPage()" [disabled]="pageStart + pageSize >= images.length">
+      Página siguiente →
+    </button>
+  </div>
+</section>
